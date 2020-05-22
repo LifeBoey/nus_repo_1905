@@ -1,0 +1,20 @@
+After doing export KUBECONFIG:
+
+Create namespaces
+kubectl create ns <namespace name>
+
+For wordpress, mysql-operator, nginx-ingress
+
+Helm install for presslabs/mysql-operator and stable/nginx-ingress
+helm install <package name + distributor> --version <version> -n <package name>
+
+Deployment
+kubectl apply -f wpdb.yaml -n wordpress
+kubectl apply -f wp.yaml -n wordpress
+
+In wp.yaml replace the IP Address in ingress with the external IP that shows up from kubectl get svc -n nginx-ingress
+
+Get the pod name from kubectl get all,ing -n wordpress -o wide for port forwarding
+kubectl port-forward pod/<pod name> 8080:80 -n wordpress
+
+go to localhost:8080 in browser to see the magic
