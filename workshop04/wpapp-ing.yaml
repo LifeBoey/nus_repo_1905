@@ -1,0 +1,29 @@
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+   name: wpapp-ing
+   labels:
+      app: wordpress
+   annotations:
+      kubernetes.io/ingress.class: "nginx"
+      nginx.ingress.kubernetes.io/enable-cors: "true"
+      nginx.ingress.kubernetes.io/limit-rpm: "15"
+
+spec:
+   rules:
+   - host: "v1.wpapp.167.172.6.181.nip.io"
+     http:
+        paths:
+        - path: /
+          backend:
+             serviceName: wpapp-svc
+             servicePort: 8080
+   - host: "v2.wpapp.167.172.6.181.nip.io"
+     http:
+        paths:
+        - path: /
+          backend:
+             serviceName: wpappv2-svc
+             servicePort: 8080
+
